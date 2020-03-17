@@ -32,7 +32,7 @@ def extract_frames(video_path, video_name):
 
     frame_count = 0
     index = 0
-    while cap.isOpened() and index < 20:
+    while cap.isOpened():
         if index % round(1/rate) != 0:
             index += 1
             continue
