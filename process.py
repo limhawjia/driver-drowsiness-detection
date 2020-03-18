@@ -56,7 +56,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    while cap.isOpened() and index < 200:
+    while cap.isOpened():
         if index % round(1 / rate) != 0:
             index += 1
             continue
