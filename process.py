@@ -8,7 +8,12 @@ rate = 0.5
 
 
 def process():
+    if len(sys.argv) < 2:
+        print('Usage: python process.py [source dir]')
+        exit(1)
+
     video_dir = sys.argv[1]
+
     sub_dirs = [f.path for f in os.scandir(video_dir) if f.is_dir()]
     for folder in sub_dirs:
         process_folder(folder)
