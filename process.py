@@ -46,7 +46,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
 
     if not cap.isOpened():
         print('Unable to open video')
-        exit(1)
+        return
 
     frame_count = 0
     index = 0
