@@ -65,8 +65,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
 
         if not check:
             print('Frame ' + str(index) + ' could not be extracted')
-            index += 1
-            continue
+            break
 
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
