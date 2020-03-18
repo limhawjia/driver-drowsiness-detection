@@ -4,7 +4,7 @@ import sys
 
 output_dir = './frames'
 # Percentage of frames to capture
-rate = 0.5
+rate = 0.16
 
 
 def process():
@@ -38,10 +38,10 @@ def process_folder(folder_path):
         if not os.path.exists(dir_name):
             os.makedirs(dir_name)
 
-        extract_frames(path, name, output_path)
+        extract_frames(path, name, get_filename(folder_path), output_path)
 
 
-def extract_frames(video_path, video_name, outputpath):
+def extract_frames(video_path, video_name, candidate_number, output_path):
     cap = cv2.VideoCapture(video_path)
 
     if not cap.isOpened():
@@ -53,11 +53,10 @@ def extract_frames(video_path, video_name, outputpath):
 
     print(f'Successfully opened video file: {video_name}, starting frame extraction')
 
-    dir_path = os.path.join(outputpath, video_name)
-    if not os.path.exists(dir_path):
-        os.makedirs(dir_path)
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
 
-    while cap.isOpened() and index < 20:
+    while cap.isOpened():
         if index % round(1 / rate) != 0:
             index += 1
             continue
@@ -71,8 +70,8 @@ def extract_frames(video_path, video_name, outputpath):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         frame_count += 1
-        frame_name = str(frame_count) + '.jpg'
-        frame_path = os.path.join(dir_path, frame_name)
+        frame_name = f'{candidate_number}_{video_name}_{frame_count}.jpg'
+        frame_path = os.path.join(output_path, frame_name)
 
         cv2.imwrite(frame_path, frame)
 
