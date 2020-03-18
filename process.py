@@ -1,16 +1,17 @@
 import cv2
 import os
+import sys
 
-video_dir = './videos'
 output_dir = './frames'
 # Percentage of frames to capture
 rate = 0.5
 
 
 def process():
-    subfolders = [f.path for f in os.scandir(video_dir) if f.is_dir()]
-    for subfolder in subfolders:
-        process_folder(subfolder)
+    video_dir = sys.argv[1]
+    sub_dirs = [f.path for f in os.scandir(video_dir) if f.is_dir()]
+    for folder in sub_dirs:
+        process_folder(folder)
 
 
 def process_folder(folder_path):

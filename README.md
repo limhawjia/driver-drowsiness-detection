@@ -10,11 +10,11 @@ Our project aims to investigate the use of various machine learning models to de
 
 ## Video pre-processing
 
-Run the script `process.py` to process videos. This script extracts the video frames and applies a grayscale to them.
+Run the script `process.py [source directory]` to process videos. The `source directory` should contain the videos
+ to be processed placed in folders corresponding to each participant. 
 
-Adjust the variables `video_dir` and `output_dir` variables at the start of the script to change the source directory
- for the videos and the output directory for the generated frames.
+This script extracts the video frames and applies a grayscale to them.
+
+Adjust the `output_dir` variable at the start of the script to change the output directory for the generated frames.
  
-Copy the folders containing the videos of each participant into the directory indicated by `video_dir`.
-
 Adjust the `rate` variable at the top of the script to change the number of frames to be extracted.
