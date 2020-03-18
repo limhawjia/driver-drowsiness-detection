@@ -64,7 +64,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
         check, frame = cap.read()
 
         if not check:
-            print('Frame ' + str(index) + ' could not be extracted')
+            print('Frame ' + str(index) + ' end of video')
             break
 
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
