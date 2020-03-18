@@ -20,10 +20,10 @@ def process():
 
 
 def process_folder(folder_path):
-    print(f'Processing folder: {folder_path}')
+    print('Processing folder: ' + folder_path)
 
     output_path = os.path.join(os.path.realpath(output_dir), get_filename(folder_path))
-    print(f'Extracting videos to: {output_path}')
+    print('Extracting videos to: ' + output_path)
 
     videos = []
     for (_, _, files) in os.walk(folder_path):
@@ -51,7 +51,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
     frame_count = 0
     index = 0
 
-    print(f'Successfully opened video file: {video_name}, starting frame extraction')
+    print('Successfully opened video file: ' + video_name + ' , starting frame extraction')
 
     if not os.path.exists(output_path):
         os.makedirs(output_path)
@@ -61,6 +61,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
             index += 1
             continue
 
+        print(index)
         check, frame = cap.read()
 
         if not check:
@@ -70,7 +71,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         frame_count += 1
-        frame_name = f'{candidate_number}_{frame_count}_{video_name}.jpg'
+        frame_name = candidate_number + '_' + str(frame_count) + '_' + video_name + '.jpg'
         frame_path = os.path.join(output_path, frame_name)
 
         cv2.imwrite(frame_path, frame)
