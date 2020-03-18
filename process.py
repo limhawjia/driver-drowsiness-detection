@@ -2,7 +2,7 @@ import cv2
 import os
 import sys
 
-output_dir = '/mnt/disks/a/frames'
+output_dir = './frames'
 # Percentage of frames to capture
 rate = 0.16
 
@@ -64,8 +64,9 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
         check, frame = cap.read()
 
         if not check:
-            print('Frame could not be extracted')
-            exit(1)
+            print('Frame ' + str(index) + ' could not be extracted')
+            index += 1
+            continue
 
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
