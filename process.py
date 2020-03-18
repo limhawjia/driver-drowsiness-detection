@@ -56,7 +56,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
-    while cap.isOpened():
+    while cap.isOpened() and index < 200:
         if index % round(1 / rate) != 0:
             index += 1
             continue
@@ -70,7 +70,7 @@ def extract_frames(video_path, video_name, candidate_number, output_path):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
         frame_count += 1
-        frame_name = f'{candidate_number}_{video_name}_{frame_count}.jpg'
+        frame_name = f'{candidate_number}_{frame_count}_{video_name}.jpg'
         frame_path = os.path.join(output_path, frame_name)
 
         cv2.imwrite(frame_path, frame)
