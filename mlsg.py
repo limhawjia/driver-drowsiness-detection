@@ -26,7 +26,7 @@ for filename in glob.glob('*.png'):
     pix_val = list(im.getdata())
     image_list_pixels[filename] = (pix_val, label)
 
-print(list(image_list_pixels.values())[0])
+len(list(image_list_pixels.values())[1][0])
 
 # This part contains sample code for the training
 '''
