@@ -11,23 +11,27 @@ from tensorflow.keras.utils import plot_model
 
 from PIL import Image
 
-IMAGE_SRC_DIR = '/mnt/disks/a/frames/'
+IMAGE_SRC_DIR = '/mnt/disks/a/frames'
 
 # Declare dictionary to store image and label
 image_label_dict = {}
 
 # Iterate through the folders of individual candidates, obtain the image as pixels and the label, store to dictionary
-root, candidates, _ = os.walk(IMAGE_SRC_DIR)[0]
-for candidates in candidates:
-    dir_path = root + candidates
-    print(dir_path)
+candidate_dirs = []
+for dir in os.listdir(IMAGE_SRC_DIR):
+    candidate_dirs.append(IMAGE_SRC_DIR + '/' + dir)
 
-    images = os.listdir(dir_path)
-    for image in images:
-        im = Image.open(image)
-        label = image[len(image) - 5]  # minus 5 as the files end with .png
-        pix_val = list(im.getdata())
-        image_label_dict[image] = (pix_val, label)
+for candidate_dir in candidate_dirs:
+    image_paths = os.listdir(candidate_dir)
+    for image_name in image_paths:
+        image_path = candidate_dir + '/' + image_name
+        im = Image.open(image_path)
+        size = im.size
+        print(size)
+
+        # label = image_name[len(image_name) - 5]  # minus 5 as the files end with .png
+        # pix_val = list(im.getdata())
+        # image_label_dict[image_name] = (pix_val, label)
 
 # This part contains sample code for the training
 '''
