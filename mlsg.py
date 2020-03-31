@@ -1,32 +1,32 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
 import tensorflow as tf
-
-from PIL import Image
 import glob
 
-# import keras
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.optimizers import SGD
-
 from tensorflow.keras.utils import plot_model
 
-# { image_name : (pixel, label) }
-image_list_pixels = {}
+from PIL import Image
 
-# get the images here
+IMAGE_SRC_DIR = '/mnt/disks/a/frames/'
 
-# reading images as pixels
-# change the link accordingly
-for filename in glob.glob('*.png'):
-    im = Image.open(filename)
-    label = filename[len(filename) - 5]  # minus 5 as the files end with .png
-    pix_val = list(im.getdata())
-    image_list_pixels[filename] = (pix_val, label)
+# Declare dictionary to store image and label
+image_label_dict = {}
 
-len(list(image_list_pixels.values())[1][0])
+# Iterate through the folders of individual candidates, obtain the image as pixels and the label, store to dictionary
+root, candidates, _ = os.walk(IMAGE_SRC_DIR)[0]
+for candidates in candidates:
+    dir_path = root + candidates
+    print(dir_path)
+
+    images = os.listdir(dir_path)
+    for image in images:
+        im = Image.open(image)
+        label = image[len(image) - 5]  # minus 5 as the files end with .png
+        pix_val = list(im.getdata())
+        image_label_dict[image] = (pix_val, label)
 
 # This part contains sample code for the training
 '''
@@ -69,4 +69,3 @@ print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
 '''
-
