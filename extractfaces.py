@@ -15,7 +15,7 @@ def get_image_paths(folder):
     return image_paths
 
 
-def extract_face(image_path):
+def extract_face(image_path, output_folder):
     print('Processing image: ' + image_path)
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     image, face_rectangle = find_face(image)
@@ -28,8 +28,9 @@ def extract_face(image_path):
     image = image[y:y + h, x:x + w]
     image = cv2.resize(image, (360, 360))
 
-    cv2.imwrite(FACE_DEST_DIR + '/' + os.path.basename(image_path), image)
-    print('Image written')
+    output_path = output_folder + '/' + os.path.basename(image_path)
+    cv2.imwrite(output_path, image)
+    print('Image written to: ' + output_path)
 
 
 def find_face(image):
@@ -56,7 +57,10 @@ def main():
         image_paths = get_image_paths(IMAGE_SRC_DIR + '/' + candidate_folder)
         for image_path in image_paths:
             try:
-                extract_face(image_path)
+                output_folder = FACE_DEST_DIR + '/' + candidate_folder
+                if not os.path.exists(output_folder):
+                    os.makedirs(output_folder)
+                extract_face(image_path, output_folder)
             except AttributeError:
                 print('Image corrupted')
                 continue
