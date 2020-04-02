@@ -66,10 +66,13 @@ def clean(root, file_names, output):
     label_0, label_5, label_10 = get_file_mappings(root, file_names, output)
 
     for old_file, new_file in label_0:
+        print('Copying old file "' + old_file + '" to new file "' + new_file + '"')
         shutil.copyfile(old_file, new_file)
     for old_file, new_file in label_5:
+        print('Copying old file "' + old_file + '" to new file "' + new_file + '"')
         shutil.copyfile(old_file, new_file)
     for old_file, new_file in label_10:
+        print('Copying old file "' + old_file + '" to new file "' + new_file + '"')
         shutil.copyfile(old_file, new_file)
 
 
