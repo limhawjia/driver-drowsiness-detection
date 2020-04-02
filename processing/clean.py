@@ -41,7 +41,7 @@ def get_every_tenth_frame(values):
 
 
 def retrieve_file_paths(root, value, output_dir):
-    candidate = str(value[0]) if value[0] > 10 else '0' + str(value[0])
+    candidate = str(value[0]) if value[0] >= 10 else '0' + str(value[0])
     old_file_name = candidate + '_' + \
         str(value[1]) + '_' + str(value[2]) + '.jpg'
     new_file_name = candidate + '_' + \
