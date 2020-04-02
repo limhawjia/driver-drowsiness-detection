@@ -50,7 +50,7 @@ def retrieve_file_paths(root, value, output_dir):
     old_file_name = candidate + '_' + \
         str(value[1]) + '_' + str(value[2]) + '.jpg'
     new_file_name = candidate + '_' + \
-        str(value[1] / 10) + '_' + str(value[2]) + '.jpg'
+        str(int(value[1] / 10)) + '_' + str(value[2]) + '.jpg'
     return os.path.join(root, old_file_name), os.path.join(output_dir, str(value[2]), new_file_name)
 
 
