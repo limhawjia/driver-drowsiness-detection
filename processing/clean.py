@@ -28,10 +28,15 @@ def get_values(file_name):
 
 
 def split_by_label_and_sort_by_frame(files_names):
-    values = map(get_values, files_names)
-    label_0 = sorted(filter(lambda x: x[2] == 0, values), key=lambda x: x[1])
-    label_5 = sorted(filter(lambda x: x[2] == 5, values), key=lambda x: x[1])
-    label_10 = sorted(filter(lambda x: x[2] == 10, values), key=lambda x: x[1])
+    values = list(map(get_values, files_names))
+
+    label_0 = [value for value in values if value[2] == 0]
+    label_5 = [value for value in values if value[2] == 5]
+    label_10 = [value for value in values if value[2] == 10]
+
+    label_0 = sorted(label_0, key=lambda x: x[1])
+    label_5 = sorted(label_5, key=lambda x: x[1])
+    label_10 = sorted(label_10, key=lambda x: x[1])
 
     return list(label_0), list(label_5), list(label_10)
 
@@ -64,6 +69,8 @@ def get_file_mappings(root, files_names, output):
 
 def clean(root, file_names, output):
     label_0, label_5, label_10 = get_file_mappings(root, file_names, output)
+
+    print(label_5)
 
     for old_file, new_file in label_0:
         print('Copying old file "' + old_file + '" to new file "' + new_file + '"')
