@@ -86,6 +86,8 @@ def main():
     if not os.path.isabs(output_dir):
         output_dir = os.path.abspath(output_dir)
 
+    create_output_dirs(output_dir)
+
     for root, dirs, files in os.walk(target_dir):
         clean(root, files, output_dir)
 
