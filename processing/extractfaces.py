@@ -2,15 +2,16 @@ import os
 import cv2
 import imutils
 
-IMAGE_SRC_DIR = '/home/hawjiaa/Projects/DriverDrowsiness/test'
-FACE_DEST_DIR = '/home/hawjiaa/Projects/DriverDrowsiness/faces'
+IMAGE_SRC_DIR = ['/home/mlsg/DiskA/frames', '/home/mlsg/DiskB/frames']
+FACE_DEST_DIR = ['/home/mlsg/DiskA/others/faces', '/home/mlsg/DiskB/others/faces']
 
 
 def get_image_paths(folder):
-    filenames = os.listdir(folder)
     image_paths = []
-    for filename in filenames:
-        image_paths.append(folder + '/' + filename)
+    for res_dir in os.listdir(folder):
+        intermediate_dir = folder + '/' + res_dir
+        for filename in os.listdir(intermediate_dir):
+            image_paths.append(intermediate_dir + '/' + filename)
 
     return image_paths
 
@@ -26,7 +27,7 @@ def extract_face(image_path, output_folder):
         return
     x, y, w, h = face_rectangle
     image = image[y:y + h, x:x + w]
-    image = cv2.resize(image, (360, 360))
+    # image = cv2.resize(image, (360, 360))
 
     output_path = output_folder + '/' + os.path.basename(image_path)
     cv2.imwrite(output_path, image)
@@ -52,19 +53,19 @@ def find_face(image):
 
 
 def main():
-    for candidate_folder in os.listdir(IMAGE_SRC_DIR):
-        print('Extracting faces from candidate folder: ' + candidate_folder)
-        image_paths = get_image_paths(IMAGE_SRC_DIR + '/' + candidate_folder)
-        for image_path in image_paths:
-            try:
-                output_folder = FACE_DEST_DIR + '/' + candidate_folder
-                if not os.path.exists(output_folder):
-                    os.makedirs(output_folder)
-                extract_face(image_path, output_folder)
-            except AttributeError:
-                print('Image corrupted')
-                continue
-
+    for i in range(2):
+        for candidate_folder in os.listdir(IMAGE_SRC_DIR[i]):
+            print('Extracting faces from candidate folder: ' + candidate_folder)
+            image_paths = get_image_paths(IMAGE_SRC_DIR[i] + '/' + candidate_folder)
+            for image_path in image_paths:
+                try:
+                    output_folder = FACE_DEST_DIR[i] + '/' + candidate_folder
+                    if not os.path.exists(output_folder):
+                        os.makedirs(output_folder)
+                    extract_face(image_path, output_folder)
+                except AttributeError:
+                    print('Image corrupted')
+                    continue
 
 if __name__ == '__main__':
     main()
