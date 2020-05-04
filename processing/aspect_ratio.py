@@ -82,9 +82,9 @@ def create_csv_files(file_path, d_name):
             label_5.append(image_file_path)
         else:
             label_10.append(image_file_path)
-    create_csv_file(label_0, os.path.join(disk_path, 'ratios', d_name, '0'))
-    create_csv_file(label_5, os.path.join(disk_path, 'ratios', d_name, '5'))
-    create_csv_file(label_10, os.path.join(disk_path, 'ratios', d_name, '10'))
+    create_csv_file(label_0, os.path.join(disk_path, 'ratios-new', d_name, '0'))
+    create_csv_file(label_5, os.path.join(disk_path, 'ratios-new', d_name, '5'))
+    create_csv_file(label_10, os.path.join(disk_path, 'ratios-new', d_name, '10'))
 
 
 def create_csv_file(images, output_path):
@@ -186,6 +186,62 @@ def normalization(path):
                     ])
         print("Done processing other files")
 
+def get_average_values(path):
+    zero_values = []
+    ten_values = []
+    disk_ratios = path + "/others/ratios"
+    for directory in os.listdir(disk_ratios):
+        # First open the 0.csv file
+        first_file = disk_ratios + '/' + directory + '/0.csv'
+        print(first_file)
+        with open(first_file, 'r', newline='') as f:
+            reader = csv.reader(f)
+            mean_ratio = []
+            mean_circularity = []
+            mouth_aspect_ratio = []
+            mar_ear_ratio = []
+            for row in reader:
+                mean_ratio.append(float(row[5]))
+                mean_circularity.append(float(row[2]))
+                mouth_aspect_ratio.append(float(row[3]))
+                mar_ear_ratio.append(float(row[4]))
+
+            if len(mean_ratio) < 30:
+                continue
+            print(statistics.mean(mean_ratio))
+            # print(statistics.mean(mean_circularity))
+            # print(statistics.mean(mouth_aspect_ratio))
+            # print(statistics.mean(mar_ear_ratio))
+            zero_values.append(statistics.mean(mean_ratio))
+
+        for ending in ['5.csv', '10.csv']:
+            next_file = disk_ratios + '/' + directory + '/' + ending
+            print(next_file)
+
+
+            with open(next_file, 'r', newline='') as f:
+                reader = csv.reader(f)
+                mean_ratio = []
+                mean_circularity = []
+                mouth_aspect_ratio = []
+                mar_ear_ratio = []
+                for row in reader:
+                    mean_ratio.append(float(row[5]))
+                    mean_circularity.append(float(row[2]))
+                    mouth_aspect_ratio.append(float(row[3]))
+                    mar_ear_ratio.append(float(row[4]))
+
+                if len(mean_ratio) < 30:
+                    continue
+                print(statistics.mean(mean_ratio))
+                # print(statistics.mean(mean_circularity))
+                # print(statistics.mean(mouth_aspect_ratio))
+                # print(statistics.mean(mar_ear_ratio))
+                if (ending == '10.csv'):
+                    ten_values.append(statistics.mean(mean_ratio))
+    print(statistics.mean(zero_values))
+    print(statistics.mean(ten_values))
+
 if __name__ == "__main__":
     # Create the output directory for each of the paths
     # if not os.path.exists(os.path.join(DISKA_DIR, 'others', 'ratios')):
@@ -201,3 +257,5 @@ if __name__ == "__main__":
         create_csv_files(os.path.join(DISKB_DIR, 'others', 'faces', d), d)
     normalization(DISKA_DIR)
     normalization(DISKB_DIR)
+    # get_average_values(DISKA_DIR)
+    # get_average_values(DISKB_DIR)
